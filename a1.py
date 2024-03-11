@@ -8,26 +8,25 @@ Starting point of the File System Manager.
 # kvakhari@uci.edu
 # 23234227
 
+import commands
 from process_input import process_input
-from commands import Commands
 
 
 def send_command(command: str, filepath: str, options: str):
     """
     Sends the command to a command-processing function.
     """
-    obj = Commands(filepath, options)
     if command == "L":
-        return obj.l_command()
+        return commands.l_command(filepath, options)
 
     elif command == "C":
-        return obj.c_command()
+        return commands.c_command(filepath, options)
 
     elif command == "R":
-        return obj.r_command()
+        return commands.r_command(filepath)
 
     elif command == "D":
-        return obj.d_command()
+        return commands.d_command(filepath)
 
 
 def main(user_input):
