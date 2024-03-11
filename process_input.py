@@ -17,9 +17,6 @@ def process_input(user_input: str) -> str:
     Outputs the initial command, filepath, and additional function
     options within the initial command.
 
-    Parameters:
-    - user_input (str): Input from the user.
-
     Returns:
     command: The initial command
     filepath: The filepath to the folder.

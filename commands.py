@@ -1,12 +1,17 @@
 """
 commands.py
+
+This module holds all the functionality behind the
+comands available in the File Management System.
 """
 
 # Kiva Vakharia
 # kvakhari@uci.edu
 # 23234227
 
+
 from pathlib import Path
+
 
 def c_command(filepath, options) -> None:
     """

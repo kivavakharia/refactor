@@ -46,8 +46,10 @@ def main(user_input):
 
     except UnboundLocalError:
         print("ERROR")
+        return
     except ValueError:
         print("ERROR")
+        return
 
 
 if __name__ == "__main__":
