@@ -13,7 +13,7 @@ from process_input import process_input
 
 
 
-def only_files(filepath):
+def only_files(filepath: str) -> None:
     """
     Print only the files within a given directory.
 
@@ -26,7 +26,7 @@ def only_files(filepath):
             print(i)
 
 
-def only_filename(filepath, options):
+def only_filename(filepath: str, options: str) -> None:
     """
     Print only the files with a specific filename within a given directory.
 
@@ -43,7 +43,7 @@ def only_filename(filepath, options):
             print(i)
 
 
-def only_extension(filepath, options):
+def only_extension(filepath, options) -> None:
     """
     Print only the files with a specific suffix within a given directory.
 
@@ -60,7 +60,7 @@ def only_extension(filepath, options):
             print(i)
 
 
-def l_command(filepath, options):
+def l_command(filepath, options) -> None:
     """
     List the contents within a given directory.
 
@@ -146,7 +146,7 @@ def l_command(filepath, options):
         only_filename(filepath, options)
 
 
-def c_command(filepath, options):
+def c_command(filepath: str, options: str) -> None:
     """Create a file at the specified filepath with the provided filename.
 
     Parameters:
@@ -167,10 +167,10 @@ def c_command(filepath, options):
     filepath += filename
     Path(filepath).touch()
 
-    return filepath
+    print(filepath)
 
 
-def d_command(delete_filepath):
+def d_command(delete_filepath: str) -> None:
     """Delete the file at the specified filepath.
 
     Parameters:
@@ -184,10 +184,10 @@ def d_command(delete_filepath):
 
     Path.unlink(delete_filepath)
     delete_statement = delete_filepath + " DELETED"
-    return delete_statement
+    print(delete_statement)
 
 
-def r_command(read_filepath):
+def r_command(read_filepath: str) -> None:
     """Read the file located at the specified filepath.
 
     Parameters:
@@ -205,40 +205,40 @@ def r_command(read_filepath):
     if file_contents == "":
         return "EMPTY"
 
+    print(file_contents)
     return file_contents
 
 def send_command(command, filepath, options):
-        if command == "L":
-            l_command(filepath, options)
+    if command == "L":
+        return l_command(filepath, options)
 
-        elif command == "C":
-            print(c_command(filepath, options))
+    elif command == "C":
+        return c_command(filepath, options)
 
-        elif command == "R":
-            print(r_command(filepath))
+    elif command == "R":
+        return r_command(filepath)
 
-        elif command == "D":
-            print(d_command(filepath))
+    elif command == "D":
+        return d_command(filepath)
 
 
 def main(user_input):
     """Run the functions."""
-    if user_input[0] == "Q":
-        exit()
-
-    if len(user_input) < 2:
-        print("ERROR")
-    
     try:
+        if user_input[0] == "Q":
+            exit()
+
+        if len(user_input) < 2:
+            raise ValueError
+
         command, filepath, options = process_input(user_input)
+        send_command(command, filepath, options)
+
     except UnboundLocalError:
         print("ERROR")
-    # print(f'Command: {command}, Filepath: {filepath}, Options: {options}')
+    except ValueError:
+        print("ERROR")
 
-    try:
-        send_command(command, filepath, options)
-    except Exception as e:
-        print(e)
 
 if __name__ == "__main__":
     user_input = ''
