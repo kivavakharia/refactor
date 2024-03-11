@@ -11,6 +11,10 @@ and options.
 # 23234227
 
 
+class WrongInputFormat(Exception):
+    """Raised when input format is incorrect"""
+
+
 def process_input(user_input: str) -> str:
     """Process input from the user.
 
@@ -24,12 +28,8 @@ def process_input(user_input: str) -> str:
     """
     if user_input == "Q":
         exit()
-
-    if user_input[0] == 'E' or user_input[0] == 'P':
-        command = user_input[0]
-        options = user_input[2:]
-        filepath = None
-        return command, filepath, options
+    if user_input[1] is not ' ':
+        raise WrongInputFormat("Did not specify command correctly.")
 
     try:
         if "\\" in user_input:
@@ -62,9 +62,8 @@ def process_input(user_input: str) -> str:
             filepath += '/'
             filepath += split_input[i]
 
-    later_options = ["-r", "-f", "-e", "-s", "-n", "-usr", "-pwd", "-bio",
-                     "-addpost", "-delpost", "-post", "-posts", "-all"]
-    need_more_input = ['-e', '-s', '-n', '-addpost', '-delpost', '-post']
+    later_options = ["-r", "-f", "-e", "-s", "-n"]
+    need_more_input = ['-e', '-s', '-n']
 
     if "\\" in user_input:
         if split_input[-1][1] != " ":
