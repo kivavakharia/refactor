@@ -1,116 +1,16 @@
-# Assignment 1
+"""
+a1.py
+
+Starting point of the File System Manager.
+"""
 
 # Kiva Vakharia
 # kvakhari@uci.edu
 # 23234227
 
-from pathlib import *
+from pathlib import Path
+from process_input import process_input
 
-
-def process_input(user_input):
-    """Process input from the user.
-
-    Outputs the initial command, filepath, and additional function
-    options within the initial command.
-
-    Parameters:
-    - user_input (str): Input from the user.
-
-    Returns:
-    command: The initial command
-    filepath: The filepath to the folder.
-    options: Additional functions within the commands.
-    """
-    if user_input == "Q":
-        exit()
-
-    if "\\" in user_input:
-        split_input = user_input.split("\\")
-    elif "/" in user_input:
-        split_input = user_input.split("/")
-
-    command = split_input[0][0].strip()
-    options = split_input[-1].strip()
-
-    filepath = ''
-    pathname = []
-
-    for i in range(len(split_input)):
-        if (i == 0) or (i == (len(split_input) - 1)):
-            continue
-
-        later_options = ["-r", "-f", "-e", "-s", "-n"]
-
-        if "\\" in user_input:
-            if i == 1:
-                if split_input[1][-1] != " ":
-                    input_beginning = split_input[0]
-                    split_command = input_beginning.split(" ")
-                    pathname.append(split_command[1])
-
-            pathname.append(split_input[i])
-
-        if "/" in user_input:
-            filepath += '/'
-            filepath += split_input[i]
-
-    if "\\" in user_input:
-        if split_input[-1][1] != " ":
-            split_options = options.split(" ")
-
-            final_file = []
-
-            for i in split_options:
-                if i in later_options:
-                    break
-                elif i not in later_options:
-                    index = split_options.index(i)
-                    final_file.append(split_options[index])
-
-            list_options = []
-            for i in split_options:
-                if i in later_options:
-                    list_options.append(i)
-                    index = split_options.index(i)
-            
-            if len(split_options) > (index + 1):
-                list_options.append(split_options[index + 1])
-
-            options = ' '.join(list_options)
-            last_filename = ' '.join(final_file)
-
-        filepath = '\\'.join(pathname)
-        filepath += '\\'
-        filepath += last_filename
-
-        if len(split_input) == 2:
-            input_beginning = split_input[0]
-            split_command = input_beginning.split(" ")
-            filepath = split_command[1] + '\\' + filepath
-
-    if "/" in user_input:
-        filepath += '/'
-
-    return command, filepath, options
-
-
-def recursive(filepath, options):
-    """
-    Recursively print the contents within a directory.
-
-    Parameters:
-    - filepath (str): A filepath to the directory.
-    """
-    directory = Path(filepath)
-
-    for i in directory.iterdir():
-        if i.is_file():
-            print(i)
-
-    for i in directory.iterdir():
-        if i.is_dir() and ("-f" not in options):
-            print(i)
-            recursive(i, options)
 
 
 def only_files(filepath):
@@ -235,8 +135,6 @@ def l_command(filepath, options):
                 if i.is_dir():
                     l_command(i, options)
 
-
-
     if "-e" in options:
         only_extension(filepath, options)
 
@@ -309,6 +207,19 @@ def r_command(read_filepath):
 
     return file_contents
 
+def send_command(command, filepath, options):
+        if command == "L":
+            l_command(filepath, options)
+
+        elif command == "C":
+            print(c_command(filepath, options))
+
+        elif command == "R":
+            print(r_command(filepath))
+
+        elif command == "D":
+            print(d_command(filepath))
+
 
 def main(user_input):
     """Run the functions."""
@@ -317,23 +228,17 @@ def main(user_input):
 
     if len(user_input) < 2:
         print("ERROR")
-        return
     
-    command, filepath, options = process_input(user_input)
+    try:
+        command, filepath, options = process_input(user_input)
+    except UnboundLocalError:
+        print("ERROR")
     # print(f'Command: {command}, Filepath: {filepath}, Options: {options}')
 
-    if command == "L":
-        l_command(filepath, options)
-
-    elif command == "C":
-        print(c_command(filepath, options))
-
-    elif command == "R":
-        print(r_command(filepath))
-
-    elif command == "D":
-        print(d_command(filepath))
-
+    try:
+        send_command(command, filepath, options)
+    except Exception as e:
+        print(e)
 
 if __name__ == "__main__":
     user_input = ''
