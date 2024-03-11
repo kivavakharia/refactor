@@ -168,8 +168,12 @@ def r_command(filepath) -> None:
 
     if filepath.suffix != ".dsu":
         print("ERROR")
+        return None
 
     if file_contents == "":
         print("EMPTY")
+        return None
 
-    print(file_contents)
+    with open(filepath, 'r') as file:
+        for line in file.readlines():
+            print(line.strip())
