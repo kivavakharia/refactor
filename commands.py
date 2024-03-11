@@ -33,7 +33,7 @@ def c_command(filepath, options) -> None:
 def l_command(filepath, options):
     """
     List the contents within a given directory.
-    """            
+    """
 
     def only_extension(filepath, options):
         """
@@ -97,14 +97,14 @@ def l_command(filepath, options):
                 if i.is_dir():
                     print(i)
                     l_command(i, options)
-        
+
         elif "-f" in options:
             directory = Path(filepath)
 
             for i in directory.iterdir():
                 if i.is_file():
                     print(i)
-            
+
             for i in directory.iterdir():
                 if i.is_dir():
                     l_command(i, options)
@@ -118,7 +118,7 @@ def l_command(filepath, options):
             for i in directory.iterdir():
                 if i.is_file() and (i.suffix == extension):
                     print(i)
-            
+
             for i in directory.iterdir():
                 if i.is_dir():
                     l_command(i, options)
@@ -131,7 +131,7 @@ def l_command(filepath, options):
             for i in directory.iterdir():
                 if i.is_file() and (i.name == filename):
                     print(i)
-            
+
             for i in directory.iterdir():
                 if i.is_dir():
                     l_command(i, options)

@@ -19,19 +19,19 @@ def send_command(command: str, filepath: str, options: str):
     if command == "L":
         return commands.l_command(filepath, options)
 
-    elif command == "C":
+    if command == "C":
         return commands.c_command(filepath, options)
 
-    elif command == "R":
+    if command == "R":
         return commands.r_command(filepath)
 
-    elif command == "D":
+    if command == "D":
         return commands.d_command(filepath)
 
 
 def main(user_input):
     """Run the functions.
-    
+
     Raise error if input is in the incorrect format
     """
     try:
@@ -46,10 +46,8 @@ def main(user_input):
 
     except UnboundLocalError:
         print("ERROR")
-        return
     except ValueError:
         print("ERROR")
-        return
 
 
 if __name__ == "__main__":

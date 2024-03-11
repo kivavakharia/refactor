@@ -46,7 +46,7 @@ def process_input(user_input: str) -> str:
     pathname = []
 
     for i in range(len(split_input)):
-        if (i == 0) or (i == (len(split_input) - 1)):
+        if i in (0, len(split_input) - 1):
             continue
 
         if "\\" in user_input:
@@ -75,7 +75,7 @@ def process_input(user_input: str) -> str:
             for i in split_options:
                 if i in later_options:
                     break
-                elif i not in later_options:
+                if i not in later_options:
                     index = split_options.index(i)
                     final_file.append(split_options[index])
 
