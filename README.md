@@ -9,7 +9,8 @@ has all the functions that run command functionality.
 
 In terms of implementing course concepts, I have made the send_command function, which is a
 higher-order function that returns functions from the commands.py module. I have also impemented
-nested functions within my L command function under commands.py.
+nested functions within my L command function under commands.py, and a custom exception to
+indicate incorrect format.
 
 Team Members:
 Kiva Vakharia
